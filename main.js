@@ -1,5 +1,6 @@
 // vars
 const http = require('http');
+const fs = require('fs');
 
 const env = {
   hostname: '127.0.0.1',
@@ -17,6 +18,8 @@ const env = {
   node_env: "dev"
 };
 const folder = env.ASSETS_FOLDER, sFolder = `${folder}/sounds`;
+if (!fs.existsSync(folder)) fs.mkdirSync(folder);
+if (!fs.existsSync(sFolder)) fs.mkdirSync(sFolder);
 env.BG_FOLDER = `${folder}/backgrounds`;
 env.PROPS_FOLDER = `${folder}/props`;
 env.MUSIC_FOLDER = `${sFolder}/music`;
@@ -24,26 +27,6 @@ env.SOUNDS_FOLDER = `${sFolder}/effects`;
 env.VOICEOVERS_FOLDER = `${sFolder}/voiceovers`;
 env.CHARS_FOLDER = `${folder}/chars`;
 env.DATABASES_FOLDER = `${folder}/meta`;
-
-// basic utilities
-const theme = require("./theme/core");
-const movie = require("./movie/core");
-const asset = require("./asset/core");
-const pages = require("./pages");
-const crossdomain = require("./crossdomain");
-const url = require('url');
-const fs = require('fs');
-
-const utilities = [
-  movie,
-  asset,
-  theme,
-  crossdomain,
-  pages
-];
-
-fs.writeFileSync(`./env.json`, JSON.stringify(env));
-if (!fs.existsSync(folder)) fs.mkdirSync(folder);
 if (!fs.existsSync(env.MOVIE_FOLDER)) fs.mkdirSync(env.MOVIE_FOLDER);
 if (!fs.existsSync(env.STARTER_FOLDER)) fs.mkdirSync(env.STARTER_FOLDER);
 if (!fs.existsSync(env.BG_FOLDER)) fs.mkdirSync(env.BG_FOLDER);
@@ -53,6 +36,24 @@ if (!fs.existsSync(env.MUSIC_FOLDER)) fs.mkdirSync(env.MUSIC_FOLDER);
 if (!fs.existsSync(env.VOICEOVERS_FOLDER)) fs.mkdirSync(env.VOICEOVERS_FOLDER);
 if (!fs.existsSync(env.CHARS_FOLDER)) fs.mkdirSync(env.CHARS_FOLDER);
 if (!fs.existsSync(env.DATABASES_FOLDER)) fs.mkdirSync(env.DATABASES_FOLDER);
+fs.writeFileSync(`./env.json`, JSON.stringify(env));
+
+// basic utilities
+const theme = require("./theme/core");
+const movie = require("./movie/core");
+const asset = require("./asset/core");
+const pages = require("./pages");
+const crossdomain = require("./crossdomain");
+const url = require('url');
+
+const utilities = [
+  movie,
+  asset,
+  theme,
+  crossdomain,
+  pages
+];
+
 Object.assign(process.env, require("./env"));
 const server = http.createServer((req, res) => {
   try {
