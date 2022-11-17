@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const env = {
   hostname: '127.0.0.1',
-  port: 80,
+  port: process.env.PORT || 80,
   MOVIE_FOLDER: "./files/movies",
   STARTER_FOLDER: "./files/starters",
   ASSETS_FOLDER: "./files/assets",
